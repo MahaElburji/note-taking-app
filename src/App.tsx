@@ -15,7 +15,7 @@ export type Note = {
   id: string;
 } & NoteData;
 
-export type RawNote = {
+export type RawNote = { 
   id: string;
 } & RawNoteData;
 

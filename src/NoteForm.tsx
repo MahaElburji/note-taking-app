@@ -1,7 +1,7 @@
 import { FormEvent, useRef, useState } from "react";
-import CreatableReactSelect from "react-select/creatable";
 import { Button, Col, Form, Row, Stack } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import CreatableReactSelect from "react-select/creatable"
 import { NoteData, Tag } from "./App";
 import { v4 as uuidV4 } from "uuid";
 
@@ -23,6 +23,7 @@ function NoteForm({
   const markdownRef = useRef<HTMLTextAreaElement>(null);
   const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
   const navigate = useNavigate();
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
@@ -31,8 +32,10 @@ function NoteForm({
       markdown: markdownRef.current!.value,
       tags: selectedTags,
     });
+
     navigate("..");
   }
+
   return (
     <Form onSubmit={handleSubmit}>
       <Stack gap={4}>
@@ -45,23 +48,19 @@ function NoteForm({
           </Col>
           <Col>
             <Form.Group controlId="tags">
-              <Form.Label>Tages</Form.Label>
+              <Form.Label>Tags</Form.Label>
               <CreatableReactSelect
-                //onCreateOption
                 onCreateOption={(label) => {
                   const newTag = { id: uuidV4(), label };
                   onAddTag(newTag);
                   setSelectedTags((prev) => [...prev, newTag]);
                 }}
-                //value
                 value={selectedTags.map((tag) => {
                   return { label: tag.label, value: tag.id };
                 })}
-                //options
                 options={availableTags.map((tag) => {
                   return { label: tag.label, value: tag.id };
                 })}
-                //onChange
                 onChange={(tags) => {
                   setSelectedTags(
                     tags.map((tag) => {
@@ -76,7 +75,13 @@ function NoteForm({
         </Row>
         <Form.Group controlId="markdown">
           <Form.Label>Body</Form.Label>
-          <Form.Control defaultValue={markdown} ref={markdownRef} required as="textarea" rows={15} />
+          <Form.Control
+            defaultValue={markdown}
+            required
+            as="textarea"
+            ref={markdownRef}
+            rows={15}
+          />
         </Form.Group>
         <Stack direction="horizontal" gap={2} className="justify-content-end">
           <Button type="submit" variant="primary">
